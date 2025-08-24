@@ -1,0 +1,2 @@
+cd "C:\Users\ansus\OneDrive\Desktop\Python Project\multilang-transcriber\backend"
+"C:\Users\ansus\AppData\Local\Programs\Python\Python311\python.exe" -m uvicorn app:app --reload --port 8000
