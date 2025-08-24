@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Multilingual Transcriber</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎧 Multilingual Audio/Video → Text</h1>
+    <p class="sub">Upload audio or video, auto-detect language, get TXT/SRT/VTT/JSON. Optional translation.</p>
+
+    <form id="transcribeForm">
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="fileInput" name="file" accept="audio/*,video/*" hidden />
+        <p><strong>Drop file here</strong> or <button type="button" id="browseBtn">Browse</button></p>
+        <small>Supported: mp3, wav, m4a, mp4, mkv, etc.</small>
+      </div>
+
+      <div class="grid">
+        <label>
+          Whisper model
+          <select name="model_size" id="model">
+            <option>tiny</option>
+            <option>base</option>
+            <option selected>small</option>
+            <option>medium</option>
+            <option>large-v3</option>
+          </select>
+        </label>
+
+        <label>
+          Compute
+          <select name="compute_type" id="compute">
+            <option selected>auto</option>
+            <option>int8</option>
+            <option>float16</option>
+            <option>float32</option>
+          </select>
+        </label>
+
+        <label>
+          Task
+          <select name="task" id="task">
+            <option value="transcribe" selected>Transcribe (same language)</option>
+            <option value="translate">Translate to English (Whisper)</option>
+          </select>
+        </label>
+
+        <label>
+          Translate to (optional)
+          <select name="translate_to" id="translateTo">
+            <option value="">— none —</option>
+          </select>
+        </label>
+      </div>
+
+      <fieldset class="outputs">
+        <legend>Export formats</legend>
+        <label><input type="checkbox" name="make_txt" checked /> TXT</label>
+        <label><input type="checkbox" name="make_srt" checked /> SRT</label>
+        <label><input type="checkbox" name="make_vtt" checked /> VTT</label>
+        <label><input type="checkbox" name="make_json" checked /> JSON</label>
+      </fieldset>
+
+      <button class="primary" type="submit">Transcribe</button>
+    </form>
+
+    <div id="progress" class="progress hidden">
+      <div class="bar" id="bar"></div>
+      <span id="status">Uploading…</span>
+    </div>
+
+    <div id="result" class="result hidden">
+      <h2>Result</h2>
+      <p><strong>Detected language:</strong> <span id="lang"></span></p>
+      <p><strong>Duration:</strong> <span id="dur"></span> sec</p>
+      <details>
+        <summary>Transcript preview</summary>
+        <pre id="preview"></pre>
+      </details>
+
+      <div id="downloads"></div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
